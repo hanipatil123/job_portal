@@ -1,0 +1,59 @@
+
+{% extends 'portal_admin/base.html' %}
+
+{% block content %}
+
+<style>
+    .category-form-card {
+        background: white;
+        padding: 30px;
+        border-radius: 16px;
+        max-width: 650px;
+        border: 1px solid #dcebe3;
+    }
+
+    .category-form-card input,
+    .category-form-card textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #c8ddd2;
+        border-radius: 8px;
+        margin: 8px 0 18px;
+        box-sizing: border-box;
+    }
+</style>
+
+<h1>{{ title }}</h1>
+<p>Add or update a job category.</p>
+
+<div class="category-form-card">
+    <form method="POST">
+        {% csrf_token %}
+
+        {{ form.non_field_errors }}
+
+        {% for field in form %}
+            <div>
+                <label for="{{ field.id_for_label }}">
+                    {{ field.label }}
+                </label>
+
+                {{ field }}
+
+                {% for error in field.errors %}
+                    <p style="color: red;">{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <button type="submit" class="btn-green">
+            Save Category
+        </button>
+
+        <a href="{% url 'portal_admin:categories' %}">
+            Cancel
+        </a>
+    </form>
+</div>
+
+{% endblock %}
