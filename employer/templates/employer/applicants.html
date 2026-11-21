@@ -1,0 +1,152 @@
+
+{% extends 'employer/base.html' %}
+
+{% block title %}
+Job Applicants | CareerConnect
+{% endblock %}
+
+{% block content %}
+
+<section class="applicants-page">
+
+    <a href="{% url 'employer:dashboard' %}"
+       class="back-link">
+        ← Back to Dashboard
+    </a>
+
+    <p class="eyebrow">
+        RECRUITMENT MANAGEMENT
+    </p>
+
+    <h1>Job Applicants</h1>
+
+    <p class="subtitle">
+        Applications received for
+        <strong>{{ job.title }}</strong>
+    </p>
+
+    <div class="content-card">
+
+        <div class="table-scroll">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Candidate Name</th>
+                        <th>Email</th>
+                        <th>Applied Date</th>
+                        <th>Resume</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for application in applications %}
+
+                    <tr>
+
+                        <td>
+                            <strong>
+                                {{ application.applicant.username }}
+                            </strong>
+                        </td>
+
+                        <td>
+                            {{ application.applicant.email }}
+                        </td>
+
+                        <td>
+                            {{ application.applied_at|date:"d M Y" }}
+                        </td>
+
+                        <td>
+
+                            {% if application.resume %}
+
+                                <a href="{{ application.resume.url }}"
+                                   target="_blank"
+                                   rel="noopener"
+                                   class="action-link">
+                                    View Resume
+                                </a>
+
+                            {% else %}
+
+                                Not Uploaded
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            <span class="status-badge status-{{ application.status }}">
+                                {{ application.get_status_display }}
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <div class="action-group">
+
+                                <form method="POST"
+                                      action="{% url 'employer:update_status' application.pk 'shortlisted' %}">
+
+                                    {% csrf_token %}
+
+                                    <button type="submit"
+                                            class="small-btn success-btn">
+                                        Shortlist
+                                    </button>
+
+                                </form>
+
+                                <form method="POST"
+                                      action="{% url 'employer:update_status' application.pk 'rejected' %}">
+
+                                    {% csrf_token %}
+
+                                    <button type="submit"
+                                            class="small-btn danger-btn">
+                                        Reject
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td colspan="6"
+                            class="empty-state">
+
+                            No candidates have applied
+                            for this job yet.
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
