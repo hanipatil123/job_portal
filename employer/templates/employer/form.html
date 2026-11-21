@@ -1,0 +1,81 @@
+
+{% extends 'employer/base.html' %}
+
+{% block title %}
+{{ title }} | CareerConnect
+{% endblock %}
+
+{% block content %}
+
+<section class="form-page">
+
+    <div class="form-card">
+
+        <a href="{% url 'employer:dashboard' %}"
+           class="back-link">
+            ← Back to Dashboard
+        </a>
+
+        <p class="eyebrow">
+            CAREERCONNECT EMPLOYER
+        </p>
+
+        <h1>{{ title }}</h1>
+
+        <p class="subtitle">
+            {{ subtitle }}
+        </p>
+
+        <form method="POST" class="styled-form">
+
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="form-errors">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            {% for field in form %}
+
+            <div class="form-group">
+
+                <label for="{{ field.id_for_label }}">
+                    {{ field.label }}
+                </label>
+
+                {{ field }}
+
+                {% if field.errors %}
+                    <div class="field-error">
+                        {{ field.errors }}
+                    </div>
+                {% endif %}
+
+                {% if field.help_text %}
+                    <small>
+                        {{ field.help_text }}
+                    </small>
+                {% endif %}
+
+            </div>
+
+            {% endfor %}
+
+            <button type="submit"
+                    class="btn btn-primary">
+                Save Changes
+            </button>
+
+            <a href="{% url 'employer:dashboard' %}"
+               class="btn btn-outline">
+                Cancel
+            </a>
+
+        </form>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,108 @@
+
+{% extends 'employer/base.html' %}
+
+{% block title %}
+{{ title }} | CareerConnect
+{% endblock %}
+
+{% block content %}
+
+<section class="auth-section">
+
+    <div class="auth-card">
+
+        <div class="auth-icon">✦</div>
+
+        <p class="eyebrow">
+            CAREERCONNECT FOR EMPLOYERS
+        </p>
+
+        <h1>{{ title }}</h1>
+
+        {% if is_register %}
+            <p class="subtitle">
+                Create your employer account and
+                start hiring the best talent.
+            </p>
+        {% else %}
+            <p class="subtitle">
+                Welcome back!
+                Login to manage your jobs and applicants.
+            </p>
+        {% endif %}
+
+        <form method="POST" class="styled-form">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="form-errors">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            {% for field in form %}
+
+            <div class="form-group">
+
+                <label for="{{ field.id_for_label }}">
+                    {{ field.label }}
+                </label>
+
+                {{ field }}
+
+                {% if field.errors %}
+                    <div class="field-error">
+                        {{ field.errors }}
+                    </div>
+                {% endif %}
+
+                {% if field.help_text %}
+                    <small>
+                        {{ field.help_text }}
+                    </small>
+                {% endif %}
+
+            </div>
+
+            {% endfor %}
+
+            <button type="submit"
+                    class="btn btn-primary full-width">
+
+                {% if is_register %}
+                    Create Employer Account
+                {% else %}
+                    Login to Dashboard
+                {% endif %}
+
+            </button>
+
+        </form>
+
+        <p class="auth-switch">
+
+            {% if is_register %}
+
+                Already have an account?
+
+                <a href="{% url 'employer:login' %}">
+                    Login Here
+                </a>
+
+            {% else %}
+
+                Don't have an account?
+
+                <a href="{% url 'employer:register' %}">
+                    Register Here
+                </a>
+
+            {% endif %}
+
+        </p>
+
+    </div>
+
+</section>
+
+{% endblock %}

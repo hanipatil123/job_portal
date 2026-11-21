@@ -1,0 +1,79 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}CareerConnect | Employer{% endblock %}
+    </title>
+
+    <link rel="stylesheet"
+          href="{% static 'employer/style.css' %}">
+</head>
+
+<body>
+
+<header class="navbar">
+    <a href="/" class="brand">
+        <span class="brand-icon">✦</span>
+        Career<span>Connect</span>
+    </a>
+
+    <nav class="nav-links">
+        <a href="/">Home</a>
+
+        {% if user.is_authenticated and user.employer_profile %}
+            <a href="{% url 'employer:dashboard' %}">
+                Dashboard
+            </a>
+
+            <a href="{% url 'employer:profile' %}">
+                Company Profile
+            </a>
+
+            <form method="POST"
+                  action="{% url 'employer:logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="nav-logout">
+                    Logout
+                </button>
+            </form>
+
+        {% else %}
+            <a href="{% url 'employer:login' %}">
+                Login
+            </a>
+
+            <a href="{% url 'employer:register' %}"
+               class="btn btn-primary">
+                Create Account
+            </a>
+        {% endif %}
+    </nav>
+</header>
+
+{% if messages %}
+<div class="message-container">
+    {% for message in messages %}
+        <div class="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% block content %}
+{% endblock %}
+
+<footer class="footer">
+    <p>
+        © 2026 CareerConnect.
+        Find your next opportunity.
+    </p>
+</footer>
+
+</body>
+</html>
