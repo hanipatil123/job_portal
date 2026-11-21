@@ -1,0 +1,127 @@
+{% extends 'job_seeker/base.html' %}
+{% load static %}
+{% block title %}Find your dream job{% endblock %}
+{% block content %}
+<main class="home-page" id="top">
+  <section class="home-hero">
+    <div class="home-hero-glow home-hero-glow-one"></div>
+    <div class="home-hero-glow home-hero-glow-two"></div>
+    <div class="container home-hero-grid">
+      <div class="home-hero-copy reveal">
+        <span class="home-eyebrow"><span class="home-eyebrow-dot"></span> A better way to build your career</span>
+        <h1>Find Your Dream Job.<br><span>Build Your Future.</span></h1>
+        <p class="home-hero-description">Discover meaningful work, meet ambitious teams, and take your next career step with confidence.</p>
+        <form class="home-search" action="{% url 'jobs' %}" method="get">
+          <label class="home-search-field">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 4.5 4.5"></path></svg>
+            <span class="home-search-label">What</span>
+            <input type="search" name="q" placeholder="Job title, skill, or company" aria-label="Job title, skill, or company">
+          </label>
+          <span class="home-search-divider" aria-hidden="true"></span>
+          <label class="home-search-field home-location-field">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 10.2c0 5-7 11-7 11s-7-6-7-11a7 7 0 1 1 14 0Z"></path><circle cx="12" cy="10" r="2.2"></circle></svg>
+            <span class="home-search-label">Where</span>
+            <input type="search" name="location" placeholder="City or remote" aria-label="City or remote">
+          </label>
+          <label class="home-search-category">
+            <span class="home-search-label">Job type</span>
+            <select name="type" aria-label="Job type">
+              <option value="">All types</option>
+              {% for value,label in job_types %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
+            </select>
+          </label>
+          <button class="btn btn-primary home-search-submit" type="submit"><span>Search jobs</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"></path></svg></button>
+        </form>
+        <div class="home-popular"><span>Popular:</span><a href="{% url 'jobs' %}?q=developer">Developer</a><a href="{% url 'jobs' %}?q=design">Design</a><a href="{% url 'jobs' %}?type=Remote">Remote</a></div>
+        <div class="home-social-proof"><div class="home-avatar-stack" aria-hidden="true"><span>J</span><span>A</span><span>M</span><span>+</span></div><p><strong>A fresh start is closer than you think.</strong><br>Find a role that fits your ambitions.</p></div>
+      </div>
+      <div class="home-visual-wrap reveal" aria-label="Illustration of a job seeker exploring career opportunities">
+        <div class="home-visual-orbit orbit-one"></div><div class="home-visual-orbit orbit-two"></div>
+        <div class="home-visual-stage">
+          <img class="home-job-seeker-art" src="{% static 'images/job-seeker-illustration.svg' %}" alt="A professional reviewing opportunities on a laptop">
+          <div class="home-float-card home-match-card">
+            <span class="home-card-icon match-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 3 2.5 5.2 5.7.8-4.1 4 1 5.7-5.1-2.7-5.1 2.7 1-5.7-4.1-4 5.7-.8L12 3Z"></path></svg></span>
+            <span><small>YOUR NEXT MOVE</small><strong>Great fit, found.</strong></span>
+            <span class="home-match-score">94%</span>
+          </div>
+          <div class="home-float-card home-notification-card">
+            <span class="home-notification-check" aria-hidden="true">✓</span>
+            <span><strong>Application sent</strong><small>One step closer to your future</small></span>
+          </div>
+          <div class="home-float-icon home-float-icon-target" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"></circle><circle cx="12" cy="12" r="4.5"></circle><circle cx="12" cy="12" r="1"></circle></svg></div>
+          <div class="home-float-icon home-float-icon-spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 2 1.8 7.2L21 12l-7.2 2.8L12 22l-1.8-7.2L3 12l7.2-2.8L12 2Z"></path></svg></div>
+        </div>
+        <p class="home-visual-caption"><span></span> Your next chapter starts here</p>
+      </div>
+    </div>
+    <div class="home-trust-row container">
+      <span>Built for your next big move</span><i></i><span>Fresh opportunities</span><i></i><span>Real career momentum</span>
+    </div>
+  </section>
+
+  <section class="home-stats" aria-label="CareerConnect in numbers">
+    <div class="container home-stats-grid">
+      <article class="home-stat reveal"><span class="home-stat-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="14" rx="2"></rect><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18m-11 0v2h4v-2"></path></svg></span><strong data-count="{{ job_count }}">0</strong><span>Open opportunities</span></article>
+      <article class="home-stat reveal"><span class="home-stat-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 10h1m4 0h1m-6 4h1m4 0h1m-6 7v-4h4v4"></path></svg></span><strong data-count="{{ company_count }}">0</strong><span>Companies hiring</span></article>
+      <article class="home-stat reveal"><span class="home-stat-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"></path><path d="m9 10 2 2 4-4"></path></svg></span><strong data-count="{{ successful_applications }}">0</strong><span>Successful applications</span></article>
+    </div>
+  </section>
+
+  <section class="home-section container" id="featured-jobs">
+    <div class="home-section-heading reveal"><div><span class="home-section-kicker">YOUR NEXT OPPORTUNITY</span><h2>Featured jobs<span class="home-heading-period">.</span></h2><p>Explore a few fresh roles picked to help you get moving.</p></div><a class="home-text-link" href="{% url 'jobs' %}">Explore all jobs <span aria-hidden="true">↗</span></a></div>
+    <div class="home-job-grid">
+      {% for job in jobs %}
+      <article class="home-job-card reveal">
+        <div class="home-job-card-top"><span class="home-company-mark mark-{{ forloop.counter|default:'1' }}">{{ job.company|slice:':1'|upper }}</span><span class="home-job-type">{{ job.job_type }}</span></div>
+        <h3><a href="{% url 'job_detail' job.pk %}">{{ job.title }}</a></h3>
+        <p class="home-company-name">{{ job.company }}</p>
+        <div class="home-job-details"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 10.2c0 5-7 11-7 11s-7-6-7-11a7 7 0 1 1 14 0Z"></path><circle cx="12" cy="10" r="2.2"></circle></svg>{{ job.location }}</span><span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>{{ job.created_at|timesince }} ago</span></div>
+        <div class="home-job-card-bottom"><strong>{{ job.salary|default:'Competitive salary' }}</strong><a href="{% url 'job_detail' job.pk %}" aria-label="View {{ job.title }} at {{ job.company }}">View role <span aria-hidden="true">↗</span></a></div>
+      </article>
+      {% empty %}
+      <div class="home-jobs-empty"><span aria-hidden="true">✦</span><h3>Your next opportunity is on its way.</h3><p>There are no active listings just yet. Check back soon or explore all opportunities.</p><a class="btn btn-primary" href="{% url 'jobs' %}">Browse jobs</a></div>
+      {% endfor %}
+    </div>
+    <div class="home-mobile-all-jobs"><a class="btn btn-outline" href="{% url 'jobs' %}">Explore all jobs <span aria-hidden="true">↗</span></a></div>
+  </section>
+
+  <section class="home-categories">
+    <div class="container home-section">
+      <div class="home-section-heading reveal"><div><span class="home-section-kicker">FIND YOUR FIELD</span><h2>Where will you grow<span class="home-heading-period">?</span></h2><p>Start with a path that feels right for you.</p></div><a class="home-text-link" href="{% url 'jobs' %}">See every opening <span aria-hidden="true">↗</span></a></div>
+      <div class="home-category-grid">
+        <a class="home-category-card category-tech reveal" href="{% url 'jobs' %}?q=developer"><span class="home-category-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="2"></rect><path d="m8 21 4-4 4 4M8 9l-2 2 2 2m8-4 2 2-2 2m-5 1 2-6"></path></svg></span><strong>Technology</strong><span>Build what’s next <b>↗</b></span></a>
+        <a class="home-category-card category-design reveal" href="{% url 'jobs' %}?q=design"><span class="home-category-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 20 4.5-1 10-10a2.8 2.8 0 0 0-4-4l-10 10L4 20Z"></path><path d="m13 7 4 4"></path></svg></span><strong>Design</strong><span>Make ideas tangible <b>↗</b></span></a>
+        <a class="home-category-card category-data reveal" href="{% url 'jobs' %}?q=data"><span class="home-category-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5m0 14h17M8 15l4-4 3 2 5-6"></path><circle cx="8" cy="15" r="1"></circle><circle cx="12" cy="11" r="1"></circle><circle cx="15" cy="13" r="1"></circle><circle cx="20" cy="7" r="1"></circle></svg></span><strong>Data &amp; Analytics</strong><span>Find the signal <b>↗</b></span></a>
+        <a class="home-category-card category-remote reveal" href="{% url 'jobs' %}?type=Remote"><span class="home-category-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="2"></rect><path d="M8 21h8m-4-4v4"></path></svg></span><strong>Remote work</strong><span>Work your way <b>↗</b></span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-why-section">
+    <div class="container home-why-grid">
+      <div class="home-why-copy reveal"><span class="home-section-kicker">MORE THAN A JOB SEARCH</span><h2>A little clarity can change everything.</h2><p>CareerConnect keeps the next step simple, so you can focus on finding work that fits your skills and your life.</p><a class="btn btn-primary" href="{% url 'jobs' %}">Find your next role <span aria-hidden="true">↗</span></a></div>
+      <div class="home-benefit-list">
+        <article class="home-benefit reveal"><span class="home-benefit-check">✓</span><div><h3>Opportunities that feel relevant</h3><p>Search by keywords, location, and job type to narrow in on what matters.</p></div></article>
+        <article class="home-benefit reveal"><span class="home-benefit-check">✓</span><div><h3>Your applications, all in one place</h3><p>See your application history and follow updates from your dashboard.</p></div></article>
+        <article class="home-benefit reveal"><span class="home-benefit-check">✓</span><div><h3>A profile that works for you</h3><p>Add your experience, skills, and resume to make applying easier.</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="container home-bottom-cta reveal">
+    <div class="home-cta-decoration cta-decoration-one"></div><div class="home-cta-decoration cta-decoration-two"></div>
+    <div><span class="home-section-kicker">YOUR NEXT CHAPTER STARTS HERE</span><h2>Ready when you are.</h2><p>Find a role that makes room for what’s next.</p></div>
+    <a class="btn btn-white" href="{% if user.is_authenticated %}{% url 'profile' %}{% else %}{% url 'register' %}{% endif %}">{% if user.is_authenticated %}Complete your profile{% else %}Create your free profile{% endif %}<span aria-hidden="true">↗</span></a>
+  </section>
+
+  <footer class="home-footer">
+    <div class="container home-footer-main">
+      <div class="home-footer-brand"><a class="brand" href="{% url 'home' %}"><span class="brand-icon">✦</span> career<span>connect</span><span class="brand-dot">.</span></a><p>Good work can change your direction.<br>Let’s find yours.</p></div>
+      <div class="home-footer-links"><strong>Explore</strong><a href="{% url 'jobs' %}">Find jobs</a><a href="#featured-jobs">Featured roles</a></div>
+      <div class="home-footer-links"><strong>Your account</strong>{% if user.is_authenticated %}<a href="{% url 'dashboard' %}">Dashboard</a><a href="{% url 'applications' %}">My applications</a><a href="{% url 'profile' %}">My profile</a>{% else %}<a href="{% url 'login' %}">Log in</a><a href="{% url 'register' %}">Create an account</a>{% endif %}</div>
+      <a class="home-footer-top" href="#top" aria-label="Back to top">↑</a>
+    </div>
+    <div class="container home-footer-bottom"><span>© 2026 CareerConnect. Built for your next move.</span><span>Find your path. Make it yours.</span></div>
+  </footer>
+</main>
+{% endblock %}
