@@ -1,0 +1,167 @@
+
+{% extends 'portal_admin/base.html' %}
+
+{% block content %}
+
+<style>
+    .dashboard-heading {
+        margin-bottom: 30px;
+    }
+
+    .dashboard-heading h1 {
+        font-size: 32px;
+        color: #173e33;
+        margin-bottom: 8px;
+    }
+
+    .dashboard-heading p {
+        color: #66877a;
+        font-size: 15px;
+    }
+
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 22px;
+        margin-bottom: 30px;
+    }
+
+    .stat-card {
+        background: white;
+        padding: 25px;
+        border-radius: 16px;
+        border: 1px solid #dcebe3;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.04);
+    }
+
+    .stat-card h3 {
+        color: #648477;
+        font-size: 15px;
+        margin: 0 0 15px;
+    }
+
+    .stat-card h2 {
+        font-size: 35px;
+        color: #087f61;
+        margin: 0;
+    }
+
+    .dashboard-section {
+        background: white;
+        padding: 28px;
+        border-radius: 16px;
+        border: 1px solid #dcebe3;
+    }
+
+    .dashboard-section h2 {
+        margin-top: 0;
+        color: #173e33;
+    }
+
+    .quick-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .quick-links a {
+        background: #087f61;
+        color: white;
+        padding: 12px 20px;
+        text-decoration: none;
+        border-radius: 9px;
+        font-weight: 600;
+    }
+
+    .quick-links a:hover {
+        background: #066b52;
+    }
+
+    @media (max-width: 900px) {
+        .dashboard-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 600px) {
+        .dashboard-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="dashboard-heading">
+    <h1>Admin Dashboard</h1>
+    <p>
+        Welcome to your CareerConnect admin workspace.
+    </p>
+</div>
+
+<div class="dashboard-grid">
+
+    <div class="stat-card">
+        <h3>Total Users</h3>
+        <h2>{{ total_users|default:"0" }}</h2>
+    </div>
+
+    <div class="stat-card">
+        <h3>Total Employers</h3>
+        <h2>{{ total_employers|default:"0" }}</h2>
+    </div>
+
+    <div class="stat-card">
+        <h3>Pending Employers</h3>
+        <h2>{{ pending_employers|default:"0" }}</h2>
+    </div>
+
+    <div class="stat-card">
+        <h3>Approved Employers</h3>
+        <h2>{{ approved_employers|default:"0" }}</h2>
+    </div>
+
+    <div class="stat-card">
+        <h3>Job Categories</h3>
+        <h2>{{ total_categories|default:"0" }}</h2>
+    </div>
+
+    <div class="stat-card">
+        <h3>Total Job Postings</h3>
+        <h2>{{ total_jobs|default:"0" }}</h2>
+    </div>
+
+</div>
+
+<div class="dashboard-section">
+
+    <h2>Quick Actions</h2>
+
+    <p>Manage your CareerConnect platform from here.</p>
+
+    <div class="quick-links">
+
+        <a href="{% url 'portal_admin:users' %}">
+            View Users
+        </a>
+
+        <a href="{% url 'portal_admin:employers' %}">
+            Manage Employers
+        </a>
+
+        <a href="{% url 'portal_admin:categories' %}">
+            Manage Categories
+        </a>
+
+        <a href="{% url 'portal_admin:jobs' %}">
+            Manage Jobs
+        </a>
+
+        <a href="{% url 'portal_admin:reports' %}">
+            View Reports
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}
